@@ -1,0 +1,82 @@
+{
+  "name": "node-sql-odata",
+  "version": "0.1.0",
+  "description": "This is a demo project implementing OData server for Azure MS SQL service",
+  "main": "lib/server/index.js",
+  "author": "JayStack",
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run babel",
+    "start": "nodemon .",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "babel": "babel src/ -d lib/",
+    "babel:w": "babel src/server -d lib/server -w",
+    "lint": "tslint src/**/*.ts -t verbose --force > .tslint",
+    "test": "mocha test/*.spec.js --reporter mochawesome --reporter-options reportDir=report,reportName=odata-v4-server,reportTitle=\"OData V4 Server\"",
+    "pretest": "npm run build",
+    "precoverage": "tsc",
+    "coverage": "rm -rf coverage && node node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha test/*.spec.js --config=.istanbul.yaml -x config/**/*.js && node node_modules/remap-istanbul/bin/remap-istanbul -i coverage/coverage.json -o coverage/html-report -t html",
+    "docker-build": "docker build -t odata-v4-server-mongodb-example .",
+    "docker-run": "docker run --name odata-v4-server-mongodb-example --link mongo:mongo -p 3000:3000 -d odata-v4-server-mongodb-example",
+    "docker-start": "docker start odata-v4-server-mongodb-example",
+    "docker-stop": "docker stop odata-v4-server-mongodb-example",
+    "docker-clean-containers": "docker rm $(docker ps -a -q)",
+    "docker-clean-images": "docker rmi $(docker images -a -q)",
+    "docker-clean": "npm run docker-clean-containers && npm run docker-clean-images",
+    "docker-enter": "docker exec -ti odata-v4-server-mongodb-example bash"
+  },
+  "watch": {
+    "coverage": "{lib,test}/*.js",
+    "lint": "{lib}/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaystack/odata-v4-server-mongodb-example.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jaystack/odata-v4-server-mongodb-example/issues"
+  },
+  "homepage": "https://github.com/jaystack/odata-v4-server-mongodb-example#readme",
+  "keywords": [
+    "OData",
+    "V4",
+    "server",
+    "mongodb",
+    "example"
+  ],
+  "dependencies": {
+    "@babel/polyfill": "^7.11.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mssql": "^6.2.3",
+    "odata-v4-mongodb": "^0.1.9",
+    "odata-v4-server": "^0.2.13",
+    "tedious": "^9.2.1"
+  },
+  "devDependencies": {
+    "@types/cors": "0.0.33",
+    "@types/mocha": "^2.2.32",
+    "@types/mongodb": "^2.1.34",
+    "@types/node": "0.0.2",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-plugin-transform-class-properties": "^6.19.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-plugin-transform-object-rest-spread": "^6.19.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2016": "^6.16.0",
+    "babel-preset-es2017": "^6.16.0",
+    "chai": "^3.5.0",
+    "extend": "^3.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.1.2",
+    "mochawesome": "^1.5.3",
+    "nodemon": "^2.0.5",
+    "npm-watch": "^0.1.6",
+    "remap-istanbul": "^0.7.0",
+    "tslint": "^3.15.1",
+    "typescript": "^2.0.8"
+  }
+}
